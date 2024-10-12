@@ -2552,10 +2552,30 @@ public class MatroskaExtractor implements Extractor {
     @EnsuresNonNull("codecPrivate")
     private byte[] getCodecPrivate(String codecId) throws ParserException {
       if (codecPrivate == null) {
-        throw ParserException.createForMalformedContainer(
-            "Missing CodecPrivate for codec " + codecId, /* cause= */ null);
+        if ("A_OPUS".equals(codecId)) {
+          codecPrivate = generateOpusCodecPrivate(); // Add this
+        } else {
+          throw ParserException.createForMalformedContainer(
+              "Missing CodecPrivate for codec " + codecId, null);
+        }
       }
       return codecPrivate;
     }
+
+    private byte[] generateOpusCodecPrivate() {
+      return new byte[] {
+          0x01, // Opus Head version
+          (byte) 0xC0, 0x00, // Pre-skip (default 312 samples)
+          (byte) 0x80, (byte) 0xBB, 0x00, 0x00, // Input sample rate (48000 Hz)
+          0x00, 0x00, // Output gain
+          0x02, // Channels (2 for stereo)
+          0x00, // Mapping family (0: single stream stereo)
+          0x01, // Number of streams (1 stream)
+          0x01, // Number of coupled streams (1 coupled stream)
+          0x00, 0x01, // Channel mapping (stream 0 -> channel 0, stream 1 -> channel 1)
+          0x00, 0x00, 0x00, 0x00 // Padding (optional, can be adjusted if needed)
+      };
+    }
+
   }
 }

@@ -36,3 +36,11 @@ ext {
     javadocTitle = 'FFmpeg extension'
 }
 apply from: '../../javadoc_library.gradle'
+
+android {
+    defaultConfig {
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a' // Add other architectures if needed
+        }
+    }
+}

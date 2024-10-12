@@ -16,10 +16,10 @@
 #
 set -eu
 
-FFMPEG_MODULE_PATH=$1
-NDK_PATH=$2
-HOST_PLATFORM=$3
-ENABLED_DECODERS=("${@:4}")
+FFMPEG_MODULE_PATH="/Users/apple/Documents/projection/android_source/ExoPlayer/extensions/ffmpeg/src/main"
+NDK_PATH="/Users/apple/Library/Android/sdk/ndk/21.4.7075529"
+HOST_PLATFORM="darwin-x86_64"
+ENABLED_DECODERS=(vorbis opus flac)
 JOBS=$(nproc 2> /dev/null || sysctl -n hw.ncpu 2> /dev/null || echo 4)
 echo "Using $JOBS jobs for make"
 COMMON_OPTIONS="
@@ -49,7 +49,7 @@ cd "${FFMPEG_MODULE_PATH}/jni/ffmpeg"
     --libdir=android-libs/armeabi-v7a \
     --arch=arm \
     --cpu=armv7-a \
-    --cross-prefix="${TOOLCHAIN_PREFIX}/armv7a-linux-androideabi16-" \
+    --cross-prefix="${TOOLCHAIN_PREFIX}/armv7a-linux-androideabi21-" \
     --nm="${TOOLCHAIN_PREFIX}/llvm-nm" \
     --ar="${TOOLCHAIN_PREFIX}/llvm-ar" \
     --ranlib="${TOOLCHAIN_PREFIX}/llvm-ranlib" \
@@ -73,31 +73,31 @@ make clean
 make -j$JOBS
 make install-libs
 make clean
-./configure \
-    --libdir=android-libs/x86 \
-    --arch=x86 \
-    --cpu=i686 \
-    --cross-prefix="${TOOLCHAIN_PREFIX}/i686-linux-android16-" \
-    --nm="${TOOLCHAIN_PREFIX}/llvm-nm" \
-    --ar="${TOOLCHAIN_PREFIX}/llvm-ar" \
-    --ranlib="${TOOLCHAIN_PREFIX}/llvm-ranlib" \
-    --strip="${TOOLCHAIN_PREFIX}/llvm-strip" \
-    --disable-asm \
-    ${COMMON_OPTIONS}
-make -j$JOBS
-make install-libs
-make clean
-./configure \
-    --libdir=android-libs/x86_64 \
-    --arch=x86_64 \
-    --cpu=x86_64 \
-    --cross-prefix="${TOOLCHAIN_PREFIX}/x86_64-linux-android21-" \
-    --nm="${TOOLCHAIN_PREFIX}/llvm-nm" \
-    --ar="${TOOLCHAIN_PREFIX}/llvm-ar" \
-    --ranlib="${TOOLCHAIN_PREFIX}/llvm-ranlib" \
-    --strip="${TOOLCHAIN_PREFIX}/llvm-strip" \
-    --disable-asm \
-    ${COMMON_OPTIONS}
-make -j$JOBS
-make install-libs
-make clean
+#./configure \
+#    --libdir=android-libs/x86 \
+#    --arch=x86 \
+#    --cpu=i686 \
+#    --cross-prefix="${TOOLCHAIN_PREFIX}/i686-linux-android21-" \
+#    --nm="${TOOLCHAIN_PREFIX}/llvm-nm" \
+#    --ar="${TOOLCHAIN_PREFIX}/llvm-ar" \
+#    --ranlib="${TOOLCHAIN_PREFIX}/llvm-ranlib" \
+#    --strip="${TOOLCHAIN_PREFIX}/llvm-strip" \
+#    --disable-asm \
+#    ${COMMON_OPTIONS}
+#make -j$JOBS
+#make install-libs
+#make clean
+#./configure \
+#    --libdir=android-libs/x86_64 \
+#    --arch=x86_64 \
+#    --cpu=x86_64 \
+#    --cross-prefix="${TOOLCHAIN_PREFIX}/x86_64-linux-android21-" \
+#    --nm="${TOOLCHAIN_PREFIX}/llvm-nm" \
+#    --ar="${TOOLCHAIN_PREFIX}/llvm-ar" \
+#    --ranlib="${TOOLCHAIN_PREFIX}/llvm-ranlib" \
+#    --strip="${TOOLCHAIN_PREFIX}/llvm-strip" \
+#    --disable-asm \
+#    ${COMMON_OPTIONS}
+#make -j$JOBS
+#make install-libs
+#make clean

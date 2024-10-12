@@ -35,6 +35,7 @@ include modulePrefix + 'playbacktests'
 project(modulePrefix + 'playbacktests').projectDir = new File(rootDir, 'playbacktests')
 
 include ':extensions:opus'
+include ':extensions:ffmpeg'
 include ':library:extractor'
 
 apply from: 'core_settings.gradle'
