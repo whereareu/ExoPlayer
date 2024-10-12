@@ -34,4 +34,7 @@ project(modulePrefix + 'demo-transformer').projectDir = new File(rootDir, 'demos
 include modulePrefix + 'playbacktests'
 project(modulePrefix + 'playbacktests').projectDir = new File(rootDir, 'playbacktests')
 
+include ':extensions:opus'
+include ':library:extractor'
+
 apply from: 'core_settings.gradle'

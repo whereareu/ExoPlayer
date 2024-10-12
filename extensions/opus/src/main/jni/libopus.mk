@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := $(call my-dir)/libopus
+LOCAL_PATH := $(call my-dir)/opus
 
 include $(CLEAR_VARS)
 

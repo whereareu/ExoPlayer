@@ -16,10 +16,10 @@
 #
 
 set -eu
-ASM_CONVERTER="./libopus/celt/arm/arm2gnu.pl"
+ASM_CONVERTER="./opus/celt/arm/arm2gnu.pl"
 
 if [[ ! -x "${ASM_CONVERTER}" ]]; then
-  echo "Please make sure you have checked out libopus."
+  echo "Please make sure you have checked out opus."
   exit
 fi
 
@@ -41,7 +41,7 @@ sed \
   -e "s/@OPUS_ARM_MAY_HAVE_EDSP@/1/g" \
   -e "s/@OPUS_ARM_MAY_HAVE_MEDIA@/1/g" \
   -e "s/@OPUS_ARM_MAY_HAVE_NEON@/1/g" \
-  libopus/celt/arm/armopts.s.in > libopus/celt/arm/armopts.s.temp
-${ASM_CONVERTER} "libopus/celt/arm/armopts.s.temp" > "libopus/celt/arm/armopts_gnu.s"
-rm "libopus/celt/arm/armopts.s.temp"
+  opus/celt/arm/armopts.s.in > opus/celt/arm/armopts.s.temp
+${ASM_CONVERTER} "opus/celt/arm/armopts.s.temp" > "opus/celt/arm/armopts_gnu.s"
+rm "opus/celt/arm/armopts.s.temp"
 echo "Converted all ASM files and generated armopts.s successfully."
